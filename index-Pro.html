@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketplace - Achetez, Vendez et Regardez en Direct</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+tailwind.config={
+theme:{
+extend:{
+colors:{
+primary:'#4f46e5',
+secondary:'#f59e0b'
+},
+borderRadius:{
+'none':'0px',
+'sm':'4px',
+DEFAULT:'8px',
+'md':'12px',
+'lg':'16px',
+'xl':'20px',
+'2xl':'24px',
+'3xl':'32px',
+'full':'9999px',
+'button':'8px'
+}
+}
+}
+}
+</script>
+<link type="website-icon" href="image/Apple.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Poppins', sans-serif;
+}
+.search-input:focus {
+outline: none;
+}
+.tab-content {
+display: none;
+}
+.tab-content.active {
+display: block;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.custom-checkbox {
+position: relative;
+cursor: pointer;
+}
+.custom-checkbox input {
+position: absolute;
+opacity: 0;
+cursor: pointer;
+}
+.checkmark {
+position: absolute;
+top: 0;
+left: 0;
+height: 20px;
+width: 20px;
+background-color: #fff;
+border: 2px solid #e5e7eb;
+border-radius: 4px;
+}
+.custom-checkbox input:checked ~ .checkmark {
+background-color: #0db7fa;
+border-color: #0db7fa;
+}
+.checkmark:after {
+content: "";
+position: absolute;
+display: none;
+}
+.custom-checkbox input:checked ~ .checkmark:after {
+display: block;
+}
+.custom-checkbox .checkmark:after {
+left: 6px;
+top: 2px;
+width: 5px;
+height: 10px;
+border: solid white;
+border-width: 0 2px 2px 0;
+transform: rotate(45deg);
+}
+.toggle-switch {
+position: relative;
+display: inline-block;
+width: 48px;
+height: 24px;
+}
+.toggle-switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+.toggle-slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #e5e7eb;
+transition: .4s;
+border-radius: 24px;
+}
+.toggle-slider:before {
+position: absolute;
+content: "";
+height: 18px;
+width: 18px;
+left: 3px;
+bottom: 3px;
+background-color: white;
+transition: .4s;
+border-radius: 50%;
+}
+input:checked + .toggle-slider {
+background-color: #0db7fa;
+}
+input:checked + .toggle-slider:before {
+transform: translateX(24px);
+}
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<!-- Header -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+<div class="container mx-auto px-4">
+<div class="flex items-center justify-between h-16">
+<!-- Logo -->
+<div class="flex-shrink-0 flex items-center">
+<a href="#" class="text-2xl font-['Pacifico'] text-primary">À Vous</a>
+</div>
+<!-- Navigation -->
+<nav class="hidden md:flex space-x-1">
+<button class="nav-tab px-4 py-2 text-gray-700 hover:text-primary font-medium rounded-full transition-colors tab-active" data-tab="vente">Vente</button>
+<button class="nav-tab px-4 py-2 text-gray-700 hover:text-primary font-medium rounded-full transition-colors" data-tab="boutique">Boutique</button>
+<button class="nav-tab px-4 py-2 text-gray-700 hover:text-primary font-medium rounded-full transition-colors" data-tab="live">Live</button>
+</nav>
+<!-- Right Icons -->
+<div class="flex items-center space-x-4">
+<button class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary rounded-full hover:bg-gray-100">
+<i class="ri-notification-3-line ri-lg"></i>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary rounded-full hover:bg-gray-100 relative">
+<i class="ri-shopping-cart-2-line ri-lg"></i>
+<span class="absolute top-1 right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-gray-700 hover:text-primary rounded-full hover:bg-gray-100">
+<i class="ri-user-line ri-lg"></i>
+</button>
+</div>
+</div>
+<!-- Search Bar -->
+<div class="py-3 border-t border-gray-100">
+<div class="relative">
+<input type="text" class="w-full h-12 pl-12 pr-4 bg-gray-100 rounded-full search-input text-gray-800" placeholder="Rechercher des produits, boutiques ou lives...">
+<div class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 flex items-center justify-center text-gray-500">
+<i class="ri-search-line ri-lg"></i>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="container mx-auto px-4 py-6">
+<!-- Vente Section -->
+<section id="vente" class="tab-content active">
+<div class="mb-8">
+<h1 class="text-2xl font-semibold text-gray-900 mb-1">Découvrez nos produits</h1>
+<p class="text-gray-600">Explorez notre sélection de produits de qualité</p>
+</div>
+<!-- Filters -->
+<div class="bg-white p-4 rounded-lg shadow-sm mb-6">
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center space-x-4">
+<div class="relative">
+<button class="flex items-center space-x-2 px-4 py-2 bg-gray-100 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-200 !rounded-button whitespace-nowrap">
+<span>Catégories</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+</div>
+<div class="relative">
+<button class="flex items-center space-x-2 px-4 py-2 bg-gray-100 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-200 !rounded-button whitespace-nowrap">
+<span>Prix</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+</div>
+<div class="relative">
+<button class="flex items-center space-x-2 px-4 py-2 bg-gray-100 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-200 !rounded-button whitespace-nowrap">
+<span>Évaluation</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+</div>
+</div>
+<div class="relative">
+<button class="flex items-center space-x-2 px-4 py-2 bg-gray-100 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-200 !rounded-button whitespace-nowrap">
+<span>Trier par: Popularité</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Products Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+<!-- Product 1 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-56">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20modern%20minimalist%20wireless%20headphones%20with%20soft%20ear%20cushions%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=400&height=300&seq=1&orientation=landscape" alt="Casque sans fil premium" class="w-full h-full object-cover object-top">
+<div class="absolute top-3 right-3">
+<button class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-sm text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center text-xs text-yellow-500 mb-1">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-half-fill"></i>
+<span class="ml-1 text-gray-600">(128)</span>
+</div>
+<h3 class="font-medium text-gray-900 mb-1">Casque sans fil premium</h3>
+<p class="text-gray-500 text-sm mb-2">Confort exceptionnel, son immersif</p>
+<div class="flex items-center justify-between">
+<span class="font-semibold text-gray-900">98 500 FCFA</span>
+<button class="px-3 py-1.5 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Ajouter
+</button>
+</div>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-56">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20sleek%20smartwatch%20with%20a%20black%20silicone%20band%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=400&height=300&seq=2&orientation=landscape" alt="Montre connectée" class="w-full h-full object-cover object-top">
+<div class="absolute top-3 right-3">
+<button class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-sm text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center text-xs text-yellow-500 mb-1">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-line"></i>
+<span class="ml-1 text-gray-600">(95)</span>
+</div>
+<h3 class="font-medium text-gray-900 mb-1">Montre connectée</h3>
+<p class="text-gray-500 text-sm mb-2">Suivi fitness, notifications, autonomie 7j</p>
+<div class="flex items-center justify-between">
+<span class="font-semibold text-gray-900">85 500 FCFA</span>
+<button class="px-3 py-1.5 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Ajouter
+</button>
+</div>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-56">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20portable%20bluetooth%20speaker%20with%20fabric%20texture%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=400&height=300&seq=3&orientation=landscape" alt="Enceinte portable" class="w-full h-full object-cover object-top">
+<div class="absolute top-3 right-3">
+<button class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-sm text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+<div class="absolute top-3 left-3 bg-secondary text-white text-xs font-medium px-2 py-1 rounded">
+-20%
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center text-xs text-yellow-500 mb-1">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<span class="ml-1 text-gray-600">(213)</span>
+</div>
+<h3 class="font-medium text-gray-900 mb-1">Enceinte portable</h3>
+<p class="text-gray-500 text-sm mb-2">Étanche, 20h d'autonomie, son puissant</p>
+<div class="flex items-center justify-between">
+<div>
+<span class="font-semibold text-gray-900">52 500 FCFA</span>
+<span class="text-gray-500 text-sm line-through ml-2">65 500 FCFA</span>
+</div>
+<button class="px-3 py-1.5 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Ajouter
+</button>
+</div>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-56">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20sleek%20power%20bank%20with%20USB%20ports%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=400&height=300&seq=4&orientation=landscape" alt="Batterie externe" class="w-full h-full object-cover object-top">
+<div class="absolute top-3 right-3">
+<button class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-sm text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center text-xs text-yellow-500 mb-1">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-half-fill"></i>
+<i class="ri-star-line"></i>
+<span class="ml-1 text-gray-600">(87)</span>
+</div>
+<h3 class="font-medium text-gray-900 mb-1">Batterie externe 20000mAh</h3>
+<p class="text-gray-500 text-sm mb-2">Charge rapide, 2 ports USB, compacte</p>
+<div class="flex items-center justify-between">
+<span class="font-semibold text-gray-900">26 500 FCFA</span>
+<button class="px-3 py-1.5 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Ajouter
+</button>
+</div>
+</div>
+</div>
+<!-- Product 5 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-56">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20stylish%20laptop%20sleeve%20case%20with%20texture%20detail%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=400&height=300&seq=5&orientation=landscape" alt="Housse ordinateur portable" class="w-full h-full object-cover object-top">
+<div class="absolute top-3 right-3">
+<button class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-sm text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center text-xs text-yellow-500 mb-1">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-line"></i>
+<span class="ml-1 text-gray-600">(64)</span>
+</div>
+<h3 class="font-medium text-gray-900 mb-1">Housse ordinateur portable</h3>
+<p class="text-gray-500 text-sm mb-2">Protection optimale, design élégant</p>
+<div class="flex items-center justify-between">
+<span class="font-semibold text-gray-900">19 500 FCFA</span>
+<button class="px-3 py-1.5 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Ajouter
+</button>
+</div>
+</div>
+</div>
+<!-- Product 6 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-56">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20wireless%20earbuds%20with%20charging%20case%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=400&height=300&seq=6&orientation=landscape" alt="Écouteurs sans fil" class="w-full h-full object-cover object-top">
+<div class="absolute top-3 right-3">
+<button class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-sm text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+<div class="absolute top-3 left-3 bg-secondary text-white text-xs font-medium px-2 py-1 rounded">
+Nouveau
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center text-xs text-yellow-500 mb-1">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-half-fill"></i>
+<span class="ml-1 text-gray-600">(42)</span>
+</div>
+<h3 class="font-medium text-gray-900 mb-1">Écouteurs sans fil</h3>
+<p class="text-gray-500 text-sm mb-2">Réduction de bruit, autonomie 30h</p>
+<div class="flex items-center justify-between">
+<span class="font-semibold text-gray-900">59 500 FCFA</span>
+<button class="px-3 py-1.5 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Ajouter
+</button>
+</div>
+</div>
+</div>
+<!-- Product 7 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-56">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20phone%20tripod%20stand%20with%20flexible%20legs%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=400&height=300&seq=7&orientation=landscape" alt="Trépied pour smartphone" class="w-full h-full object-cover object-top">
+<div class="absolute top-3 right-3">
+<button class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-sm text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center text-xs text-yellow-500 mb-1">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-line"></i>
+<i class="ri-star-line"></i>
+<span class="ml-1 text-gray-600">(31)</span>
+</div>
+<h3 class="font-medium text-gray-900 mb-1">Trépied pour smartphone</h3>
+<p class="text-gray-500 text-sm mb-2">Flexible, télécommande Bluetooth incluse</p>
+<div class="flex items-center justify-between">
+<span class="font-semibold text-gray-900">13 500 FCFA</span>
+<button class="px-3 py-1.5 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Ajouter
+</button>
+</div>
+</div>
+</div>
+<!-- Product 8 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-56">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20wireless%20charging%20pad%20with%20LED%20indicator%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=400&height=300&seq=8&orientation=landscape" alt="Chargeur sans fil" class="w-full h-full object-cover object-top">
+<div class="absolute top-3 right-3">
+<button class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-sm text-gray-500 hover:text-primary">
+<i class="ri-heart-line"></i>
+</button>
+</div>
+<div class="absolute top-3 left-3 bg-secondary text-white text-xs font-medium px-2 py-1 rounded">
+-15%
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center text-xs text-yellow-500 mb-1">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-line"></i>
+<span class="ml-1 text-gray-600">(76)</span>
+</div>
+<h3 class="font-medium text-gray-900 mb-1">Chargeur sans fil</h3>
+<p class="text-gray-500 text-sm mb-2">Charge rapide 15W, compatible Qi</p>
+<div class="flex items-center justify-between">
+<div>
+<span class="font-semibold text-gray-900">16 500 FCFA</span>
+<span class="text-gray-500 text-sm line-through ml-2">19 500 FCFA</span>
+</div>
+<button class="px-3 py-1.5 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Ajouter
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-10 flex justify-center">
+<div class="flex items-center space-x-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 !rounded-button whitespace-nowrap">
+<i class="ri-arrow-left-s-line"></i>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white !rounded-button whitespace-nowrap">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 !rounded-button whitespace-nowrap">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 !rounded-button whitespace-nowrap">3</button>
+<span class="text-gray-500">...</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 !rounded-button whitespace-nowrap">10</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 !rounded-button whitespace-nowrap">
+<i class="ri-arrow-right-s-line"></i>
+</button>
+</div>
+</div>
+</section>
+<!-- Boutique Section -->
+<section id="boutique" class="tab-content">
+<div class="mb-8">
+<h1 class="text-2xl font-semibold text-gray-900 mb-1">Gérez votre boutique</h1>
+<p class="text-gray-600">Publiez et gérez vos produits facilement</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Sidebar -->
+<div class="lg:col-span-1">
+<div class="bg-white rounded-lg shadow-sm p-5">
+<div class="flex items-center space-x-4 mb-6">
+<div class="w-16 h-16 bg-gray-200 rounded-full overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=professional%20headshot%20portrait%20of%20a%20young%20entrepreneur%20with%20a%20friendly%20smile%2C%20clean%20background%2C%20high%20quality%20portrait%20photography&width=100&height=100&seq=9&orientation=squarish" alt="Photo de profil" class="w-full h-full object-cover">
+</div>
+<div>
+<h3 class="font-medium text-gray-900">Boutique de Sophie</h3>
+<p class="text-sm text-gray-600">Membre depuis mai 2023</p>
+</div>
+</div>
+<div class="space-y-4 mb-6">
+<div class="flex items-center justify-between">
+<span class="text-gray-700">Produits publiés</span>
+<span class="font-medium text-gray-900">24</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-gray-700">Ventes totales</span>
+<span class="font-medium text-gray-900">187</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-gray-700">Évaluation moyenne</span>
+<div class="flex items-center">
+<span class="font-medium text-gray-900 mr-1">4.8</span>
+<div class="flex text-yellow-500 text-xs">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-half-fill"></i>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<button id="addProductBtn" class="w-full px-4 py-2.5 bg-primary text-white rounded font-medium hover:bg-primary/90 flex items-center justify-center space-x-2 !rounded-button whitespace-nowrap">
+<i class="ri-add-line"></i>
+<span>Ajouter un produit</span>
+</button>
+<!-- Payment Modal -->
+<div id="paymentModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center">
+<div class="bg-white rounded-lg w-full max-w-md mx-4">
+<div class="p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xl font-semibold text-gray-900">Paiement requis</h3>
+<button id="closePaymentModal" class="text-gray-500 hover:text-gray-700">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+<div class="space-y-4">
+<div class="bg-gray-50 rounded-lg p-4">
+<div class="flex items-center space-x-3 mb-3">
+<i class="ri-money-dollar-circle-line text-primary text-2xl"></i>
+<div>
+<h4 class="font-medium text-gray-900">MTN Mobile Money</h4>
+<p class="text-sm text-gray-600">Frais de publication: 200 FCFA par produit</p>
+</div>
+</div>
+<div class="flex items-center justify-between bg-white rounded p-3 border border-gray-200">
+<span class="font-medium">+242 068151209</span>
+<button class="text-primary hover:text-primary/80" onclick="copyNumber()">
+<i class="ri-file-copy-line"></i>
+</button>
+</div>
+</div>
+<div class="bg-yellow-50 rounded-lg p-4">
+<div class="flex space-x-2">
+<i class="ri-information-line text-yellow-600 mt-1"></i>
+<div class="text-sm text-yellow-800">
+<p class="font-medium mb-1">Instructions:</p>
+<ol class="list-decimal ml-4 space-y-1">
+<li>Ouvrez votre application MTN Mobile Money</li>
+<li>Envoyez 200 FCFA au numéro indiqué</li>
+<li>Conservez votre reçu de transaction</li>
+<li>Entrez le numéro de transaction ci-dessous</li>
+</ol>
+<p class="mt-2 text-xs">Note: Le paiement de 200 FCFA vous permet de publier un seul produit. Pour publier plusieurs produits, effectuez des paiements séparés.</p>
+</div>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Numéro de transaction</label>
+<input type="text" id="transactionId" class="w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary/20 focus:border-primary" placeholder="Entrez le numéro de transaction">
+</div>
+</div>
+<div class="mt-6">
+<button id="verifyPaymentBtn" class="w-full px-4 py-2.5 bg-primary text-white rounded font-medium hover:bg-primary/90 flex items-center justify-center space-x-2 !rounded-button whitespace-nowrap">
+<i class="ri-check-line"></i>
+<span>Vérifier le paiement</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full px-4 py-2.5 bg-white border border-gray-300 text-gray-700 rounded font-medium hover:bg-gray-50 flex items-center justify-center space-x-2 !rounded-button whitespace-nowrap">
+<i class="ri-store-2-line"></i>
+<span>Paramètres de la boutique</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="lg:col-span-2">
+<!-- Search and Filter -->
+<div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+<div class="relative">
+<input type="text" class="w-full h-12 pl-12 pr-4 bg-gray-100 rounded-full search-input text-gray-800" placeholder="Rechercher dans vos produits...">
+<div class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 flex items-center justify-center text-gray-500">
+<i class="ri-search-line ri-lg"></i>
+</div>
+</div>
+</div>
+<!-- Products List -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+<div class="p-4 border-b border-gray-100 flex items-center justify-between">
+<h3 class="font-medium text-gray-900">Vos produits (24)</h3>
+<div class="flex items-center space-x-2">
+<button class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 !rounded-button whitespace-nowrap">
+<i class="ri-filter-3-line mr-1"></i>
+Filtrer
+</button>
+<button class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 !rounded-button whitespace-nowrap">
+<i class="ri-sort-desc-line mr-1"></i>
+Trier
+</button>
+</div>
+</div>
+<!-- Product Item 1 -->
+<div class="p-4 border-b border-gray-100 hover:bg-gray-50">
+<div class="flex items-center space-x-4">
+<div class="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20wireless%20headphones%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=100&height=100&seq=10&orientation=squarish" alt="Casque sans fil" class="w-full h-full object-cover object-top">
+</div>
+<div class="flex-grow min-w-0">
+<h4 class="font-medium text-gray-900 truncate">Casque sans fil premium</h4>
+<div class="flex items-center text-sm text-gray-500 mt-1">
+<span>149,99 €</span>
+<span class="mx-2">•</span>
+<span>Stock: 18</span>
+<span class="mx-2">•</span>
+<div class="flex items-center">
+<i class="ri-star-fill text-yellow-500 mr-1"></i>
+<span>4.8 (128)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<button class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200">
+<i class="ri-edit-line"></i>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200">
+<i class="ri-delete-bin-line"></i>
+</button>
+<label class="toggle-switch">
+<input type="checkbox" checked>
+<span class="toggle-slider"></span>
+</label>
+</div>
+</div>
+</div>
+<!-- Product Item 2 -->
+<div class="p-4 border-b border-gray-100 hover:bg-gray-50">
+<div class="flex items-center space-x-4">
+<div class="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20smartwatch%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=100&height=100&seq=11&orientation=squarish" alt="Montre connectée" class="w-full h-full object-cover object-top">
+</div>
+<div class="flex-grow min-w-0">
+<h4 class="font-medium text-gray-900 truncate">Montre connectée</h4>
+<div class="flex items-center text-sm text-gray-500 mt-1">
+<span>129,99 €</span>
+<span class="mx-2">•</span>
+<span>Stock: 12</span>
+<span class="mx-2">•</span>
+<div class="flex items-center">
+<i class="ri-star-fill text-yellow-500 mr-1"></i>
+<span>4.0 (95)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<button class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200">
+<i class="ri-edit-line"></i>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200">
+<i class="ri-delete-bin-line"></i>
+</button>
+<label class="toggle-switch">
+<input type="checkbox" checked>
+<span class="toggle-slider"></span>
+</label>
+</div>
+</div>
+</div>
+<!-- Product Item 3 -->
+<div class="p-4 border-b border-gray-100 hover:bg-gray-50">
+<div class="flex items-center space-x-4">
+<div class="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20bluetooth%20speaker%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=100&height=100&seq=12&orientation=squarish" alt="Enceinte portable" class="w-full h-full object-cover object-top">
+</div>
+<div class="flex-grow min-w-0">
+<h4 class="font-medium text-gray-900 truncate">Enceinte portable</h4>
+<div class="flex items-center text-sm text-gray-500 mt-1">
+<span>79,99 €</span>
+<span class="mx-2">•</span>
+<span>Stock: 25</span>
+<span class="mx-2">•</span>
+<div class="flex items-center">
+<i class="ri-star-fill text-yellow-500 mr-1"></i>
+<span>5.0 (213)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<button class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200">
+<i class="ri-edit-line"></i>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200">
+<i class="ri-delete-bin-line"></i>
+</button>
+<label class="toggle-switch">
+<input type="checkbox" checked>
+<span class="toggle-slider"></span>
+</label>
+</div>
+</div>
+</div>
+<!-- Product Item 4 -->
+<div class="p-4 border-b border-gray-100 hover:bg-gray-50">
+<div class="flex items-center space-x-4">
+<div class="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20a%20power%20bank%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=100&height=100&seq=13&orientation=squarish" alt="Batterie externe" class="w-full h-full object-cover object-top">
+</div>
+<div class="flex-grow min-w-0">
+<h4 class="font-medium text-gray-900 truncate">Batterie externe 20000mAh</h4>
+<div class="flex items-center text-sm text-gray-500 mt-1">
+<span>39,99 €</span>
+<span class="mx-2">•</span>
+<span>Stock: 32</span>
+<span class="mx-2">•</span>
+<div class="flex items-center">
+<i class="ri-star-fill text-yellow-500 mr-1"></i>
+<span>3.5 (87)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<button class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200">
+<i class="ri-edit-line"></i>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200">
+<i class="ri-delete-bin-line"></i>
+</button>
+<label class="toggle-switch">
+<input type="checkbox" checked>
+<span class="toggle-slider"></span>
+</label>
+</div>
+</div>
+</div>
+<!-- Product Item 5 -->
+<div class="p-4 hover:bg-gray-50">
+<div class="flex items-center space-x-4">
+<div class="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20wireless%20earbuds%20with%20charging%20case%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=100&height=100&seq=14&orientation=squarish" alt="Écouteurs sans fil" class="w-full h-full object-cover object-top">
+</div>
+<div class="flex-grow min-w-0">
+<h4 class="font-medium text-gray-900 truncate">Écouteurs sans fil</h4>
+<div class="flex items-center text-sm text-gray-500 mt-1">
+<span>89,99 €</span>
+<span class="mx-2">•</span>
+<span>Stock: 9</span>
+<span class="mx-2">•</span>
+<div class="flex items-center">
+<i class="ri-star-fill text-yellow-500 mr-1"></i>
+<span>4.5 (42)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<button class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200">
+<i class="ri-edit-line"></i>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200">
+<i class="ri-delete-bin-line"></i>
+</button>
+<label class="toggle-switch">
+<input type="checkbox">
+<span class="toggle-slider"></span>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-6 flex justify-center">
+<div class="flex items-center space-x-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 !rounded-button whitespace-nowrap">
+<i class="ri-arrow-left-s-line"></i>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white !rounded-button whitespace-nowrap">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 !rounded-button whitespace-nowrap">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 !rounded-button whitespace-nowrap">3</button>
+<span class="text-gray-500">...</span>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 !rounded-button whitespace-nowrap">5</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 !rounded-button whitespace-nowrap">
+<i class="ri-arrow-right-s-line"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Live Section -->
+<section id="live" class="tab-content">
+<div class="mb-8">
+<h1 class="text-2xl font-semibold text-gray-900 mb-1">Ventes en direct</h1>
+<p class="text-gray-600">Découvrez les ventes en direct ou lancez votre propre diffusion</p>
+</div>
+<div id="fullscreen-container" class="fixed inset-0 bg-black hidden z-50">
+<div class="relative w-full h-full">
+<div id="video-container" class="w-full h-full">
+<!-- Videos will be dynamically inserted here -->
+</div>
+<button id="close-fullscreen" class="absolute top-4 right-4 text-white z-10 w-10 h-10 flex items-center justify-center rounded-full bg-black/50">
+<i class="ri-close-line ri-lg"></i>
+</button>
+</div>
+</div>
+<!-- Live Controls -->
+<div class="bg-white rounded-lg shadow-sm p-4 mb-6 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center space-x-4">
+<div class="relative">
+<button class="flex items-center space-x-2 px-4 py-2 bg-gray-100 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-200 !rounded-button whitespace-nowrap">
+<span>Catégories</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+</div>
+<div class="relative">
+<button class="flex items-center space-x-2 px-4 py-2 bg-gray-100 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-200 !rounded-button whitespace-nowrap">
+<span>En direct maintenant</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+</div>
+</div>
+<button class="px-4 py-2 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary/90 flex items-center space-x-2 !rounded-button whitespace-nowrap">
+<i class="ri-live-line"></i>
+<span>Démarrer un live</span>
+</button>
+</div>
+<!-- Featured Live -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
+<div class="relative h-80">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20showcase%20with%20a%20person%20presenting%20electronics%20products%20on%20a%20table%20with%20good%20lighting%2C%20e-commerce%20live%20streaming%20setup%2C%20high%20quality%20commercial%20photography&width=1200&height=400&seq=15&orientation=landscape" alt="Live en vedette" class="w-full h-full object-cover">
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+<div class="p-6 text-white">
+<div class="flex items-center space-x-2 mb-2">
+<span class="bg-red-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
+<i class="ri-live-fill mr-1"></i>
+EN DIRECT
+</span>
+<span class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+1 243 spectateurs
+</span>
+</div>
+<h3 class="text-xl font-semibold mb-1">Présentation des nouveaux produits tech de l'été</h3>
+<p class="text-gray-200 mb-3">Découvrez en avant-première notre nouvelle collection d'accessoires électroniques</p>
+<div class="flex items-center space-x-3">
+<div class="flex items-center space-x-2">
+<div class="w-8 h-8 rounded-full overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=professional%20headshot%20portrait%20of%20a%20young%20male%20entrepreneur%20with%20a%20friendly%20smile%2C%20clean%20background%2C%20high%20quality%20portrait%20photography&width=50&height=50&seq=16&orientation=squarish" alt="Vendeur" class="w-full h-full object-cover">
+</div>
+<span class="font-medium">TechShop Paris</span>
+</div>
+<button class="px-3 py-1 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Rejoindre
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Live Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Live 1 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow live-card" data-video-url="https://readdy.ai/api/search-image?query=professional%20product%20showcase%20with%20a%20person%20presenting%20fashion%20items%20on%20a%20table%20with%20good%20lighting%2C%20e-commerce%20live%20streaming%20setup%2C%20high%20quality%20commercial%20photography&width=400&height=300&seq=17&orientation=landscape" data-streamer="ModeFashion" data-title="Nouvelle collection printemps-été" data-viewers="487" data-likes="487">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20showcase%20with%20a%20person%20presenting%20fashion%20items%20on%20a%20table%20with%20good%20lighting%2C%20e-commerce%20live%20streaming%20setup%2C%20high%20quality%20commercial%20photography&width=400&height=300&seq=17&orientation=landscape" alt="Live mode" class="w-full h-full object-cover">
+<div class="absolute top-3 left-3 bg-red-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
+<i class="ri-live-fill mr-1"></i>
+EN DIRECT
+</div>
+<div class="flex gap-2 absolute top-3 right-3">
+<button class="like-btn bg-black/50 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1" data-likes="487">
+<i class="ri-heart-line"></i>
+<span class="like-count">487</span>
+</button>
+<div class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+487 spectateurs
+</div>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-medium text-gray-900 mb-1">Nouvelle collection printemps-été</h3>
+<div class="flex items-center space-x-2 mb-3">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=professional%20headshot%20portrait%20of%20a%20young%20female%20entrepreneur%20with%20a%20friendly%20smile%2C%20clean%20background%2C%20high%20quality%20portrait%20photography&width=50&height=50&seq=18&orientation=squarish" alt="Vendeur" class="w-full h-full object-cover">
+</div>
+<span class="text-sm text-gray-600">ModeFashion</span>
+</div>
+<button class="w-full px-3 py-2 bg-primary text-white rounded font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Rejoindre le live
+</button>
+</div>
+</div>
+<!-- Live 2 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20showcase%20with%20a%20person%20presenting%20kitchen%20gadgets%20on%20a%20table%20with%20good%20lighting%2C%20e-commerce%20live%20streaming%20setup%2C%20high%20quality%20commercial%20photography&width=400&height=300&seq=19&orientation=landscape" alt="Live cuisine" class="w-full h-full object-cover">
+<div class="absolute top-3 left-3 bg-red-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
+<i class="ri-live-fill mr-1"></i>
+EN DIRECT
+</div>
+<div class="flex gap-2 absolute top-3 right-3">
+<button class="like-btn bg-black/50 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1" data-likes="312">
+<i class="ri-heart-line"></i>
+<span class="like-count">312</span>
+</button>
+<div class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+312 spectateurs
+</div>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-medium text-gray-900 mb-1">Gadgets de cuisine innovants</h3>
+<div class="flex items-center space-x-2 mb-3">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=professional%20headshot%20portrait%20of%20a%20middle-aged%20male%20chef%20with%20a%20friendly%20smile%2C%20clean%20background%2C%20high%20quality%20portrait%20photography&width=50&height=50&seq=20&orientation=squarish" alt="Vendeur" class="w-full h-full object-cover">
+</div>
+<span class="text-sm text-gray-600">CuisineExpert</span>
+</div>
+<button class="w-full px-3 py-2 bg-primary text-white rounded font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Rejoindre le live
+</button>
+</div>
+</div>
+<!-- Live 3 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20showcase%20with%20a%20person%20presenting%20beauty%20products%20on%20a%20table%20with%20good%20lighting%2C%20e-commerce%20live%20streaming%20setup%2C%20high%20quality%20commercial%20photography&width=400&height=300&seq=21&orientation=landscape" alt="Live beauté" class="w-full h-full object-cover">
+<div class="absolute top-3 left-3 bg-red-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
+<i class="ri-live-fill mr-1"></i>
+EN DIRECT
+</div>
+<div class="flex gap-2 absolute top-3 right-3">
+<button class="like-btn bg-black/50 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1" data-likes="729">
+<i class="ri-heart-line"></i>
+<span class="like-count">729</span>
+</button>
+<div class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+729 spectateurs
+</div>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-medium text-gray-900 mb-1">Routine beauté naturelle</h3>
+<div class="flex items-center space-x-2 mb-3">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=professional%20headshot%20portrait%20of%20a%20young%20female%20beauty%20influencer%20with%20a%20friendly%20smile%2C%20clean%20background%2C%20high%20quality%20portrait%20photography&width=50&height=50&seq=22&orientation=squarish" alt="Vendeur" class="w-full h-full object-cover">
+</div>
+<span class="text-sm text-gray-600">BeautéNaturelle</span>
+</div>
+<button class="w-full px-3 py-2 bg-primary text-white rounded font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Rejoindre le live
+</button>
+</div>
+</div>
+<!-- Live 4 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20showcase%20with%20a%20person%20presenting%20sports%20equipment%20on%20a%20table%20with%20good%20lighting%2C%20e-commerce%20live%20streaming%20setup%2C%20high%20quality%20commercial%20photography&width=400&height=300&seq=23&orientation=landscape" alt="Live sport" class="w-full h-full object-cover">
+<div class="absolute top-3 left-3 bg-red-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
+<i class="ri-live-fill mr-1"></i>
+EN DIRECT
+</div>
+<div class="flex gap-2 absolute top-3 right-3">
+<button class="like-btn bg-black/50 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1" data-likes="156">
+<i class="ri-heart-line"></i>
+<span class="like-count">156</span>
+</button>
+<div class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+156 spectateurs
+</div>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-medium text-gray-900 mb-1">Équipements fitness à domicile</h3>
+<div class="flex items-center space-x-2 mb-3">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=professional%20headshot%20portrait%20of%20a%20young%20male%20fitness%20trainer%20with%20a%20friendly%20smile%2C%20clean%20background%2C%20high%20quality%20portrait%20photography&width=50&height=50&seq=24&orientation=squarish" alt="Vendeur" class="w-full h-full object-cover">
+</div>
+<span class="text-sm text-gray-600">SportFitness</span>
+</div>
+<button class="w-full px-3 py-2 bg-primary text-white rounded font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Rejoindre le live
+</button>
+</div>
+</div>
+<!-- Live 5 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20showcase%20with%20a%20person%20presenting%20home%20decor%20items%20on%20a%20table%20with%20good%20lighting%2C%20e-commerce%20live%20streaming%20setup%2C%20high%20quality%20commercial%20photography&width=400&height=300&seq=25&orientation=landscape" alt="Live déco" class="w-full h-full object-cover">
+<div class="absolute top-3 left-3 bg-red-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
+<i class="ri-live-fill mr-1"></i>
+EN DIRECT
+</div>
+<div class="flex gap-2 absolute top-3 right-3">
+<button class="like-btn bg-black/50 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1" data-likes="287">
+<i class="ri-heart-line"></i>
+<span class="like-count">287</span>
+</button>
+<div class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+287 spectateurs
+</div>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-medium text-gray-900 mb-1">Tendances déco automne</h3>
+<div class="flex items-center space-x-2 mb-3">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=professional%20headshot%20portrait%20of%20a%20middle-aged%20female%20interior%20designer%20with%20a%20friendly%20smile%2C%20clean%20background%2C%20high%20quality%20portrait%20photography&width=50&height=50&seq=26&orientation=squarish" alt="Vendeur" class="w-full h-full object-cover">
+</div>
+<span class="text-sm text-gray-600">DécoIntérieur</span>
+</div>
+<button class="w-full px-3 py-2 bg-primary text-white rounded font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Rejoindre le live
+</button>
+</div>
+</div>
+<!-- Live 6 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+<div class="relative h-48">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20showcase%20with%20a%20person%20presenting%20jewelry%20items%20on%20a%20table%20with%20good%20lighting%2C%20e-commerce%20live%20streaming%20setup%2C%20high%20quality%20commercial%20photography&width=400&height=300&seq=27&orientation=landscape" alt="Live bijoux" class="w-full h-full object-cover">
+<div class="absolute top-3 left-3 bg-red-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
+<i class="ri-live-fill mr-1"></i>
+EN DIRECT
+</div>
+<div class="flex gap-2 absolute top-3 right-3">
+<button class="like-btn bg-black/50 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1" data-likes="419">
+<i class="ri-heart-line"></i>
+<span class="like-count">419</span>
+</button>
+<div class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+419 spectateurs
+</div>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-medium text-gray-900 mb-1">Collection bijoux artisanaux</h3>
+<div class="flex items-center space-x-2 mb-3">
+<div class="w-6 h-6 rounded-full overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=professional%20headshot%20portrait%20of%20a%20young%20female%20jewelry%20designer%20with%20a%20friendly%20smile%2C%20clean%20background%2C%20high%20quality%20portrait%20photography&width=50&height=50&seq=28&orientation=squarish" alt="Vendeur" class="w-full h-full object-cover">
+</div>
+<span class="text-sm text-gray-600">BijouxCréation</span>
+</div>
+<button class="w-full px-3 py-2 bg-primary text-white rounded font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+Rejoindre le live
+</button>
+</div>
+</div>
+</div>
+<!-- Upcoming Lives -->
+<div class="mt-10">
+<h2 class="text-xl font-semibold text-gray-900 mb-4">Prochains lives</h2>
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+<div class="p-4 border-b border-gray-100">
+<div class="flex items-center space-x-4">
+<div class="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20books%20and%20stationery%20items%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=100&height=100&seq=29&orientation=squarish" alt="Live papeterie" class="w-full h-full object-cover">
+</div>
+<div class="flex-grow">
+<h3 class="font-medium text-gray-900">Fournitures de bureau design</h3>
+<div class="flex items-center text-sm text-gray-500 mt-1">
+<i class="ri-calendar-line mr-1"></i>
+<span>Demain • 14:00</span>
+<span class="mx-2">•</span>
+<span>PapeterieModerne</span>
+</div>
+</div>
+<button class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 !rounded-button whitespace-nowrap">
+<i class="ri-notification-line mr-1"></i>
+Rappel
+</button>
+</div>
+</div>
+<div class="p-4 border-b border-gray-100">
+<div class="flex items-center space-x-4">
+<div class="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20smart%20home%20devices%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=100&height=100&seq=30&orientation=squarish" alt="Live maison connectée" class="w-full h-full object-cover">
+</div>
+<div class="flex-grow">
+<h3 class="font-medium text-gray-900">Maison connectée - Solutions intelligentes</h3>
+<div class="flex items-center text-sm text-gray-500 mt-1">
+<i class="ri-calendar-line mr-1"></i>
+<span>07/05 • 18:30</span>
+<span class="mx-2">•</span>
+<span>SmartHome</span>
+</div>
+</div>
+<button class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 !rounded-button whitespace-nowrap">
+<i class="ri-notification-line mr-1"></i>
+Rappel
+</button>
+</div>
+</div>
+<div class="p-4">
+<div class="flex items-center space-x-4">
+<div class="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=professional%20product%20photography%20of%20gardening%20tools%20and%20plants%20on%20a%20clean%20white%20background%2C%20high%20quality%20product%20shot%2C%20commercial%20photography%2C%20detailed%20texture&width=100&height=100&seq=31&orientation=squarish" alt="Live jardinage" class="w-full h-full object-cover">
+</div>
+<div class="flex-grow">
+<h3 class="font-medium text-gray-900">Jardinage urbain - Conseils et produits</h3>
+<div class="flex items-center text-sm text-gray-500 mt-1">
+<i class="ri-calendar-line mr-1"></i>
+<span>08/05 • 11:00</span>
+<span class="mx-2">•</span>
+<span>JardinUrbain</span>
+</div>
+</div>
+<button class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 !rounded-button whitespace-nowrap">
+<i class="ri-notification-line mr-1"></i>
+Rappel
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-white border-t border-gray-200 mt-10">
+<div class="container mx-auto px-4 py-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div>
+<a href="#" class="text-2xl font-['Pacifico'] text-primary">logo</a>
+<p class="mt-4 text-gray-600">Votre plateforme de vente en ligne et en direct, pour acheter et vendre facilement.</p>
+<div class="mt-4 flex space-x-3">
+<a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-primary hover:text-white">
+<i class="ri-facebook-fill"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-primary hover:text-white">
+<i class="ri-twitter-x-fill"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-primary hover:text-white">
+<i class="ri-instagram-fill"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-primary hover:text-white">
+<i class="ri-youtube-fill"></i>
+</a>
+</div>
+</div>
+<div>
+<h4 class="font-medium text-gray-900 mb-4">À propos</h4>
+<ul class="space-y-2">
+<li><a href="#" class="text-gray-600 hover:text-primary">Notre histoire</a></li>
+<li><a href="#" class="text-gray-600 hover:text-primary">Comment ça marche</a></li>
+<li><a href="#" class="text-gray-600 hover:text-primary">Témoignages</a></li>
+<li><a href="#" class="text-gray-600 hover:text-primary">Carrières</a></li>
+<li><a href="#" class="text-gray-600 hover:text-primary">Investisseurs</a></li>
+<li><a href="https://www.benijhonblackmakosso@gmail.com">Contactz Nous</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-medium text-gray-900 mb-4">Support</h4>
+<ul class="space-y-2">
+<li><a href="#" class="text-gray-600 hover:text-primary">Centre d'aide</a></li>
+<li><a href="#" class="text-gray-600 hover:text-primary">Contacter le support</a></li>
+<li><a href="#" class="text-gray-600 hover:text-primary">Statut du système</a></li>
+<li><a href="#" class="text-gray-600 hover:text-primary">Remboursements</a></li>
+<li><a href="#" class="text-gray-600 hover:text-primary">Signaler un problème</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-medium text-gray-900 mb-4">Newsletter</h4>
+<p class="text-gray-600 mb-4">Recevez nos dernières offres et actualités</p>
+<div class="flex">
+<input type="email" class="flex-grow px-4 py-2 bg-gray-100 rounded-l border-none text-gray-800 search-input" placeholder="Votre email">
+<button class="px-4 py-2 bg-primary text-white rounded-r font-medium hover:bg-primary/90 !rounded-button whitespace-nowrap">
+S'inscrire
+</button>
+</div>
+<div class="mt-4">
+<p class="text-gray-600 text-sm">Moyens de paiement acceptés:</p>
+<div class="mt-2 flex space-x-3">
+<i class="ri-visa-fill text-2xl text-gray-600"></i>
+<i class="ri-mastercard-fill text-2xl text-gray-600"></i>
+<i class="ri-paypal-fill text-2xl text-gray-600"></i>
+<i class="ri-apple-fill text-2xl text-gray-600"></i>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
+<p class="text-gray-600 text-sm">&copy; 2025 Marketplace. Tous droits réservés.</p>
+<div class="mt-4 md:mt-0 flex space-x-4">
+<a href="#" class="text-gray-600 hover:text-primary text-sm">Confidentialité</a>
+<a href="#" class="text-gray-600 hover:text-primary text-sm">Conditions d'utilisation</a>
+<a href="#" class="text-gray-600 hover:text-primary text-sm">Cookies</a>
+<a href="#" class="text-gray-600 hover:text-primary text-sm">Mentions légales</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Payment Modal
+const addProductBtn = document.getElementById('addProductBtn');
+const paymentModal = document.getElementById('paymentModal');
+const closePaymentModal = document.getElementById('closePaymentModal');
+const verifyPaymentBtn = document.getElementById('verifyPaymentBtn');
+addProductBtn?.addEventListener('click', () => {
+paymentModal.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+});
+closePaymentModal?.addEventListener('click', () => {
+paymentModal.classList.add('hidden');
+document.body.style.overflow = '';
+});
+verifyPaymentBtn?.addEventListener('click', () => {
+const transactionId = document.getElementById('transactionId').value;
+if (!transactionId) {
+showNotification('Veuillez entrer le numéro de transaction', 'error');
+return;
+}
+showNotification('Vérification en cours...', 'info');
+// Here you would typically verify the transaction with your backend
+setTimeout(() => {
+showNotification('Paiement vérifié avec succès! Vous pouvez maintenant ajouter votre produit.', 'success');
+paymentModal.classList.add('hidden');
+document.body.style.overflow = '';
+}, 2000);
+});
+// Notification system
+function showNotification(message, type) {
+const notification = document.createElement('div');
+notification.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
+type === 'error' ? 'bg-red-500' :
+type === 'success' ? 'bg-green-500' :
+'bg-blue-500'
+} text-white`;
+notification.textContent = message;
+document.body.appendChild(notification);
+setTimeout(() => notification.remove(), 3000);
+}
+// Copy number function
+window.copyNumber = function() {
+navigator.clipboard.writeText('+242 068151209');
+showNotification('Numéro copié!', 'success');
+}
+let currentVideoIndex = 0;
+const videoContainer = document.getElementById('video-container');
+const fullscreenContainer = document.getElementById('fullscreen-container');
+const closeFullscreenBtn = document.getElementById('close-fullscreen');
+const liveCards = document.querySelectorAll('.live-card');
+function createVideoElement(data) {
+return `
+<div class="absolute inset-0 flex flex-col video-slide ${data.active ? '' : 'hidden'}">
+<video class="w-full h-full object-cover" src="${data.videoUrl}" autoplay loop muted playsinline>
+Your browser does not support the video element.
+</video>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
+<div class="flex items-center space-x-2 mb-2">
+<div class="w-10 h-10 rounded-full overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=professional%20headshot%20portrait&width=50&height=50&seq=${Math.random()}&orientation=squarish" alt="Streamer" class="w-full h-full object-cover">
+</div>
+<div class="flex-1">
+<h3 class="text-white font-medium">${data.streamer}</h3>
+<p class="text-white/80 text-sm">${data.title}</p>
+</div>
+<button class="like-btn bg-black/50 text-white px-3 py-1.5 rounded-full flex items-center space-x-1">
+<i class="ri-heart-line"></i>
+<span>${data.likes}</span>
+</button>
+</div>
+<div class="flex items-center space-x-2">
+<span class="bg-red-600 text-white text-xs px-2 py-1 rounded-full flex items-center">
+<i class="ri-live-fill mr-1"></i>EN DIRECT
+</span>
+<span class="bg-black/50 text-white text-xs px-2 py-1 rounded-full">
+${data.viewers} spectateurs
+</span>
+</div>
+</div>
+</div>
+`;
+}
+function handleScroll(event) {
+if (event.deltaY > 0 && currentVideoIndex < liveCards.length - 1) {
+// Scroll down
+currentVideoIndex++;
+updateVideoDisplay();
+} else if (event.deltaY < 0 && currentVideoIndex > 0) {
+// Scroll up
+currentVideoIndex--;
+updateVideoDisplay();
+}
+}
+function updateVideoDisplay() {
+const slides = videoContainer.querySelectorAll('.video-slide');
+slides.forEach((slide, index) => {
+if (index === currentVideoIndex) {
+slide.classList.remove('hidden');
+const video = slide.querySelector('video');
+video.play();
+} else {
+slide.classList.add('hidden');
+const video = slide.querySelector('video');
+video.pause();
+}
+});
+}
+liveCards.forEach(card => {
+card.addEventListener('click', () => {
+const videoData = {
+videoUrl: card.dataset.videoUrl,
+streamer: card.dataset.streamer,
+title: card.dataset.title,
+viewers: card.dataset.viewers,
+likes: card.dataset.likes,
+active: true
+};
+videoContainer.innerHTML = '';
+liveCards.forEach((_, index) => {
+const data = {
+videoUrl: liveCards[index].dataset.videoUrl,
+streamer: liveCards[index].dataset.streamer,
+title: liveCards[index].dataset.title,
+viewers: liveCards[index].dataset.viewers,
+likes: liveCards[index].dataset.likes,
+active: index === 0
+};
+videoContainer.insertAdjacentHTML('beforeend', createVideoElement(data));
+});
+fullscreenContainer.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+currentVideoIndex = 0;
+updateVideoDisplay();
+});
+});
+closeFullscreenBtn.addEventListener('click', () => {
+fullscreenContainer.classList.add('hidden');
+document.body.style.overflow = '';
+const videos = videoContainer.querySelectorAll('video');
+videos.forEach(video => video.pause());
+});
+videoContainer.addEventListener('wheel', handleScroll);
+// Like System
+const likeButtons = document.querySelectorAll('.like-btn');
+likeButtons.forEach(btn => {
+btn.addEventListener('click', function() {
+const heartIcon = this.querySelector('i');
+const likeCount = this.querySelector('.like-count');
+const currentLikes = parseInt(likeCount.textContent);
+if (heartIcon.classList.contains('ri-heart-line')) {
+heartIcon.classList.remove('ri-heart-line');
+heartIcon.classList.add('ri-heart-fill');
+heartIcon.classList.add('text-red-500');
+likeCount.textContent = currentLikes + 1;
+} else {
+heartIcon.classList.remove('ri-heart-fill');
+heartIcon.classList.remove('text-red-500');
+heartIcon.classList.add('ri-heart-line');
+likeCount.textContent = currentLikes - 1;
+}
+});
+});
+// Tab Navigation
+const navTabs = document.querySelectorAll('.nav-tab');
+const tabContents = document.querySelectorAll('.tab-content');
+navTabs.forEach(tab => {
+tab.addEventListener('click', () => {
+// Remove active class from all tabs
+navTabs.forEach(t => t.classList.remove('tab-active', 'text-primary', 'bg-primary/10'));
+// Add active class to clicked tab
+tab.classList.add('tab-active', 'text-primary', 'bg-primary/10');
+// Hide all tab contents
+tabContents.forEach(content => {
+content.classList.remove('active');
+});
+// Show the corresponding tab content
+const tabId = tab.getAttribute('data-tab');
+document.getElementById(tabId).classList.add('active');
+});
+});
+});
+</script>
+</body>
+</html>
