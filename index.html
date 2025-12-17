@@ -1,119 +1,278 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chargement...</title>
-  <!-- Google Fonts Blinker -->
-  <link href="https://fonts.googleapis.com/css2?family=Blinker&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      margin: 0;
-      background-color:white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: 'Blinker', sans-serif;
-      color: white;
-      flex-direction: column;
-    }
-
-    .loader {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .youtube-bar {
-      width: 80px;
-      height: 4px;
-      background: #0db7fa;
-      animation: loadBar 1s infinite ease-in-out;
-      margin-bottom: 20px;
-    }
-
-    @keyframes loadBar {
-      0% { transform: scaleX(0.1); }
-      50% { transform: scaleX(1); }
-      100% { transform: scaleX(0.1); }
-    }
-
-    .cat {
-      position: relative;
-      width: 100px;
-      height: 60px;
-      margin-bottom: 30px;
-    }
-
-    .head {
-      width: 40px;
-      height: 40px;
-      background: #01b4fa;
-      border-radius: 50%;
-      position: absolute;
-      left: 30px;
-      top: 0;
-      animation: headMove 1s infinite alternate;
-    }
-
-    .body {
-      width: 100px;
-      height: 40px;
-      background: #01b4fa;
-      border-radius: 50px 50px 30px 30px;
-      position: absolute;
-      top: 20px;
-    }
-
-    .tail {
-      width: 15px;
-      height: 40px;
-      background: #01b4fa;
-      position: absolute;
-      right: -10px;
-      top: 20px;
-      border-radius: 50%;
-      transform-origin: top center;
-      animation: tailWag 1s infinite ease-in-out;
-    }
-
-    @keyframes tailWag {
-      0% { transform: rotate(0deg); }
-      50% { transform: rotate(30deg); }
-      100% { transform: rotate(0deg); }
-    }
-
-    @keyframes headMove {
-      0% { transform: rotate(-5deg); }
-      50% { transform: rotate(5deg); }
-      100% { transform: rotate(-5deg); }
-    }
-
-    .loading-text {
-      font-size: 24px;
-      font-weight: 600;
-      text-shadow: 0 0 5px white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="bootstrap-5.3.8-dist/css/bootstrap.css">
+    <title>Boutique</title>
 </head>
-<body>
-  <div class="loader">
-    <div class="youtube-bar"></div>
-    <div class="cat">
-      <div class="head"></div>
-      <div class="body"></div>
-      <div class="tail"></div>
+<body style="font-family:'Times New Roman', Times, serif; font-style: italic;" ">
+    <header>
+        <h1 class="header bg-dark text-white  d-flex justify-content-center p-6 ">THE BEST DAY</h1>
+    </header>
+ 
+<div class="d-flex justify-content-center text-white" style="margin: 100px;">
+    <h2 class="text-primary"  style="font-family:'Times New Roman', Times, serif; font-style: italic;" >Bienvenue à Best day</h2> 
+    
+    <div>
+    <div id="Carousel" class="carousel slide my-6" data-bs-ride="carousel" data-bs-interval="2000">
+
+        <div class="carousel-indicators">
+
+             <button type="button" data-bs-target="#Carousel" data-bs-slide-to="0" class="active"></button>
+             <button type="button" data-bs-target="#Carousel" data-bs-slide-to="1" ></button>
+             <button type="button" data-bs-target="#Carousel" data-bs-slide-to="2"></button>
+             <button type="button" data-bs-target="#Carousel" data-bs-slide-to="3"></button>
+
+        </div>
+
+        <div class="carousel-inner">
+
+            <div class="carousel-item active ">
+                <img src="robe 3.png" alt="" class="d-block w-100vh mx-auto">
+            </div>
+
+            <div class="carousel-item" >
+                <img src="chemise.png" alt="" class="d-block w-100vh  mx-auto">
+            </div>
+
+            <div class="carousel-item" >
+                 <img src="robe2.png" alt="" class="d-block w-100vh  mx-auto">
+            </div>
+            
+            <div class="carousel-item" >
+                <img src="paire q.png" alt="" class="d-block w-100vh  mx-auto">
+            </div>
+
+
+        </div>
+
+        <div class="bg-white">
+
+            <button class="carousel-control-prev" type="button  " data-bs-target="#Carousel" data-bs-slide="next">
+                 <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button " data-bs-target="#Carousel" data-bs-slide="next">
+                 <span class="carousel-control-next-icon"></span>
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+
+
+<section  class="d-flex justify-content-center">
+  <div class="container">
+    <h2 class="text-center mb-5 text-primary">Nos Produit</h2>
+
+    <div class="row justify-content-around">
+
+     
+      <div class="col-sm-12 col-md-6 col-lg-3 mb-4">
+        <div class="card team-card">
+
+          <div id="Carousel1" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1100">
+            <div class="carousel-inner bg-dark">
+              <div class="carousel-item active">
+                <img src="robe2.png" class="d-block w-100" style="height:300px; object-fit:cover;" alt="">
+              </div>
+              <div class="carousel-item">
+                <img src="robe 3.png" class="d-block w-100" style="height:300px; object-fit:cover;" alt="">
+              </div>
+              <div class="carousel-item">
+                <img src="robe r.jpg" class="d-block w-100" style="height:300px; object-fit:cover;" alt="">
+              </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#Carousel1" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#Carousel1" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+
+          <div class="card-body">
+            <h5 class="card-title">Robe</h5>
+            <p class="card-text">Dépôt de verse , prix : 50.000 FCFA.</p>
+
+            <button type="button" class="btn btn-dark d-flex mx-auto text-white m-3"
+              data-bs-toggle="modal" data-bs-target="#Robe">
+              Détails du Produit
+            </button>
+
+            
+            <div class="modal fade" id="Robe" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 style="font-family:'Times New Roman'; font-style: italic;">Robe</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p style="font-family:'Times New Roman'; font-style: italic;">
+                      Robe de qualité, bien travaillée, prix : 50.000 FCFA.
+                    </p>
+                  </div>
+                  <div class="modal-footer bg-secondary">
+                    <button class="btn btn-info text-dark" data-bs-dismiss="modal">Fermer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      
+      <div class="col-sm-12 col-md-6 col-lg-3 mb-4">
+        <div class="card team-card">
+
+          <div id="Carousel2" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1400">
+            <div class="carousel-inner bg-dark">
+              <div class="carousel-item active">
+                <img src="chemise.png" class="d-block w-100" style="height:300px; object-fit:cover;" alt="">
+              </div>
+              <div class="carousel-item">
+                <img src="chemise2.png" class="d-block w-100" style="height:300px; object-fit:cover;" alt="">
+              </div>
+              <div class="carousel-item">
+                <img src="chemise3.png" class="d-block w-100" style="height:300px; object-fit:cover;" alt="">
+              </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#Carousel2" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#Carousel2" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+
+          <div class="card-body">
+            <h5>Chemise</h5>
+            <p>Formule deluxe ,prix : 100.000 FCFA</p>
+
+            <button type="button" class="btn btn-dark d-flex mx-auto text-white m-3"
+              data-bs-toggle="modal" data-bs-target="#Chemise">
+              Détails du Produit
+            </button>
+
+           
+            <div class="modal fade" id="Chemise" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 style="font-family:'Times New Roman'; font-style: italic;">Chemise</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p style="font-family:'Times New Roman'; font-style: italic;">
+                      Chemise italienne de qualité supérieure, prix : 100.000 FCFA.
+                    </p>
+                  </div>
+                  <div class="modal-footer bg-secondary">
+                    <button class="btn btn-info text-dark" data-bs-dismiss="modal">Fermer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      
+
+
+
+      <div class="col-sm-12 col-md-6 col-lg-3 mb-4">
+        <div class="card team-card">
+
+          <div id="Carousel3" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1100">
+            <div class="carousel-inner bg-dark">
+              <div class="carousel-item active">
+                <img src="paire 2.jpg" class="d-block w-100" style="height:300px; object-fit:cover;" alt="">
+              </div>
+              <div class="carousel-item">
+                <img src="paire q.png" class="d-block w-100" style="height:300px; object-fit:cover;" alt="">
+              </div>
+              <div class="carousel-item">
+                <img src="paire w.avif" class="d-block w-100" style="height:300px; object-fit:cover;" alt="">
+              </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#Carousel3" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#Carousel3" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+
+          <div class="card-body">
+            <h5>Paire</h5>
+            <p>Classe et confort,  prix : 80.000 FCFA.</p>
+
+            <button type="button" class="btn btn-dark d-flex mx-auto text-white m-3"
+              data-bs-toggle="modal" data-bs-target="#Paire">
+              Détails du Produit
+            </button>
+
+           
+            <div class="modal fade" id="Paire" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 style="font-family:'Times New Roman'; font-style: italic;">Paire</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p style="font-family:'Times New Roman'; font-style: italic;">
+                      Paire élégant et résistant, prix : 80.000 FCFA.
+                    </p>
+                  </div>
+                  <div class="modal-footer bg-secondary">
+                    <button class="btn btn-info text-dark" data-bs-dismiss="modal">Fermer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-  <div class="loading-text">Chargement...</div>
+</section>
 
-  <script>
-    // Redirect to Google after 3 seconds
-    setTimeout(() => {
-      window.location.href = "index-Pro.html";
-    }, 3000);
-  </script>
+
+
+
+
+
+<footer class="bg-dark mt-5 p-6 text-white">
+    <p style="font-family:'Times New Roman', Times, serif; font-style: italic;" ">@ copy right 2025, best Black</p>
+    <a href="mailto:benijhonblackmakosso@gmail.com">🔗📧Mail</a>
+
+</footer style="text-decoration:none">
+
+    <script src="bootstrap-5.3.8-dist/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
-
